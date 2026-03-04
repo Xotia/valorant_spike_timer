@@ -49,6 +49,8 @@ class _SpikeTimerPageState extends State<SpikeTimerPage> {
       },
       onEnd: () async {
         await _audioService.playExplosion(); // Son d'explosion
+        await Future.delayed(const Duration(seconds: 6));
+        await _audioService.playRoundEnd();
         debugPrint('Spike exploded');
       },
     );
@@ -121,6 +123,8 @@ class _SpikeTimerPageState extends State<SpikeTimerPage> {
     if (_defuseTimer.isRunning) _defuseTimer.stop(); // ← Utilise le getter
     await _audioService.playPlant();
     _spikeTimer.start();
+    _roundTimer.pause();
+    setState(() {});
   }
 
   void _pauseRoundTimer() {
