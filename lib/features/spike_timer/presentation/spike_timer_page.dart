@@ -35,7 +35,8 @@ class _SpikeTimerPageState extends State<SpikeTimerPage> {
           _roundRemaining = duration;
         });
       },
-      onEnd: () {
+      onEnd: () async {
+        await _audioService.playRoundEnd();
         debugPrint('🏁 Round time up!');
       },
     );
@@ -92,7 +93,8 @@ class _SpikeTimerPageState extends State<SpikeTimerPage> {
     setState(() {});
   }
 
-  void _startRoundTimer() {
+  void _startRoundTimer() async {
+    await _audioService.playRoundStart();
     _roundTimer.start();
   }
 

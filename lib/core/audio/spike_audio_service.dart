@@ -5,6 +5,8 @@ class SpikeAudioService {
   late final AudioPlayer _plantPlayer;
   late final AudioPlayer _defusePlayer;
   late final AudioPlayer _explosionPlayer;
+  late final AudioPlayer _roundStartPlayer;
+  late final AudioPlayer _roundEndPlayer;
 
   // Contexte Android jeu (priorité)
   static final AudioContext _gameContext = AudioContext(
@@ -19,6 +21,24 @@ class SpikeAudioService {
     _plantPlayer = AudioPlayer()..setAudioContext(_gameContext);
     _defusePlayer = AudioPlayer()..setAudioContext(_gameContext);
     _explosionPlayer = AudioPlayer()..setAudioContext(_gameContext);
+    _roundStartPlayer = AudioPlayer()..setAudioContext(_gameContext);
+    _roundEndPlayer = AudioPlayer()..setAudioContext(_gameContext);
+  }
+
+  Future<void> playRoundStart() async {
+    try {
+      await _roundStartPlayer.play(AssetSource('sounds/round_start.mp3'));
+    } catch (e) {
+      print('Round start audio error: $e');
+    }
+  }
+
+  Future<void> playRoundEnd() async {
+    try {
+      await _roundEndPlayer.play(AssetSource('sounds/round_end.mp3'));
+    } catch (e) {
+      print('Round end audio error: $e');
+    }
   }
 
   Future<void> playPlant() async {
@@ -64,5 +84,7 @@ class SpikeAudioService {
     _plantPlayer.dispose();
     _defusePlayer.dispose();
     _explosionPlayer.dispose();
+    _roundStartPlayer.dispose();
+    _roundEndPlayer.dispose();
   }
 }
